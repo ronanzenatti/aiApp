@@ -1,6 +1,6 @@
 {
-	"appId": "io.ionic.starter",
-	"appName": "aiApp",
-	"webDir": "www",
-	"bundledWebRuntime": false
+  "appId": "com.ronanzenatti.aiapp",
+  "appName": "ai App",
+  "webDir": "www",
+  "bundledWebRuntime": false
 }

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">ai App</string>
+    <string name="title_activity_main">ai App</string>
+    <string name="package_name">com.ronanzenatti.aiapp</string>
+    <string name="custom_url_scheme">com.ronanzenatti.aiapp</string>
+</resources>

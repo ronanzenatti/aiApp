@@ -1,0 +1,6 @@
+{
+	"appId": "com.ronanzenatti.aiapp",
+	"appName": "ai App",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}
