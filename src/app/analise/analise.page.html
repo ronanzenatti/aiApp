@@ -1,0 +1,32 @@
+<ion-header class="ion-no-border">
+  <img src="assets/analyze.svg" alt="">
+  <h1>Análise de Imagem</h1>
+</ion-header>
+<ion-content>
+
+  <ion-item lines="full">
+    <ion-label color="primary" position="stacked">Descrição:</ion-label>
+    <div class="text">
+      {{captions}}
+    </div>
+  </ion-item>
+
+  <ion-item lines="full">
+    <ion-label color="primary" position="stacked">Confiança:</ion-label>
+    <ion-input class="ion-text-right" readonly="true" [(ngModel)]="confidence"></ion-input>
+  </ion-item>
+
+  <ion-item lines="full">
+    <ion-label color="primary" position="stacked">Marcas encontradas:</ion-label>
+    <ul>
+      <li *ngFor="let tag of tags">{{tag}}</li>
+    </ul>
+  </ion-item>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="primary" (click)="closeModal()">
+      <ion-icon name="chevron-back-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

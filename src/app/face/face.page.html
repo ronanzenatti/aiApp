@@ -1,0 +1,180 @@
+<ion-header class="ion-no-border">
+  <img src="assets/face.svg" alt="">
+  <h1>Análise de Rostos</h1>
+</ion-header>
+<ion-content>
+
+  <ion-list lines="full" mode="ios" *ngFor="let face of dadosRosto; let i = index">
+    <ion-list-header lines="full">
+      <ion-label>Rosto {{ i+1 }}</ion-label>
+    </ion-list-header>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label color="primary" position="stacked">Genêro:</ion-label>
+          <div class="text ion-text-center">
+            {{face.gender}}
+          </div>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label color="primary" position="stacked">Idade:</ion-label>
+          <div class="text ion-text-center">
+            {{face.age}}
+          </div>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label color="primary" position="stacked">Óculos:</ion-label>
+          <div class="text ion-text-center">
+            {{face.glasses}}
+          </div>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label color="primary" position="stacked">Sorriso:</ion-label>
+          <div class="text ion-text-center">
+            {{(face.smile > 0.59) ? 'Sorrindo' : (face.smile > 0.49) ? 'Talvez' : 'Não'}}
+          </div>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label color="primary" position="stacked">Barba:</ion-label>
+          <div class="text ion-text-center">
+            {{(face.facialHair.beard > 0.59) ? 'Sim' : (face.facialHair.beard > 0.49) ? 'Talvez' : 'Não'}}
+          </div>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label color="primary" position="stacked">Bigode:</ion-label>
+          <div class="text ion-text-center">
+            {{(face.facialHair.moustache > 0.59) ? 'Sim' : (face.facialHair.moustache > 0.49) ? 'Talvez' : 'Não'}}
+          </div>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label color="primary" position="stacked">Costeletas:</ion-label>
+          <div class="text ion-text-center">
+            {{(face.facialHair.sideburns > 0.59) ? 'Sim' : (face.facialHair.sideburns > 0.49) ? 'Talvez' : 'Não'}}
+          </div>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="6">
+        <ion-item>
+          <ion-label color="primary" position="stacked">Make no Olho:</ion-label>
+          <div class="text ion-text-center">
+            {{face.makeup.eyeMakeup ? 'Sim' : 'Não'}}
+          </div>
+        </ion-item>
+      </ion-col>
+      <ion-col size="6">
+        <ion-item>
+          <ion-label color="primary" position="stacked">Make na Boca:</ion-label>
+          <div class="text ion-text-center">
+            {{face.makeup.lipMakeup ? 'Sim' : 'Não'}}
+          </div>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-item lines="none">
+      <ion-label color="primary" position="stacked">Cabelo:</ion-label>
+      <table>
+        <tbody>
+          <tr>
+            <th>Cor</th>
+            <th>Confiança</th>
+          </tr>
+          <tr *ngFor="let color of face.hair.hairColor">
+            <td>{{color.color | titlecase}}</td>
+            <td>{{color.confidence | percent:'0.2-2'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </ion-item>
+
+
+    <ion-item lines="none">
+      <ion-label color="primary" position="stacked">Acessórios:</ion-label>
+      <table>
+        <tbody>
+          <tr>
+            <th>Cor</th>
+            <th>Confiança</th>
+          </tr>
+          <tr *ngFor="let color of face.accessories">
+            <td>{{color.type | titlecase}}</td>
+            <td>{{color.confidence | percent:'0.2-2'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-label color="primary" position="stacked">Emoção:</ion-label>
+      <table>
+        <tbody>
+          <tr>
+            <th>Descrição</th>
+            <th>Confiança</th>
+          </tr>
+          <tr>
+            <td>Raiva</td>
+            <td>{{face.emotion.anger | percent:'0.2-2'}}</td>
+          </tr>
+          <tr>
+            <td>Desprezo</td>
+            <td>{{face.emotion.contempt | percent:'0.2-2'}}</td>
+          </tr>
+          <tr>
+            <td>Nojo</td>
+            <td>{{face.emotion.disgust | percent:'0.2-2'}}</td>
+          </tr>
+          <tr>
+            <td>Medo</td>
+            <td>{{face.emotion.fear | percent:'0.2-2'}}</td>
+          </tr>
+          <tr>
+            <td>Felicidade</td>
+            <td>{{face.emotion.happiness | percent:'0.2-2'}}</td>
+          </tr>
+          <tr>
+            <td>Neutro</td>
+            <td>{{face.emotion.neutral | percent:'0.2-2'}}</td>
+          </tr>
+          <tr>
+            <td>Tristeza</td>
+            <td>{{face.emotion.sadness | percent:'0.2-2'}}</td>
+          </tr>
+          <tr>
+            <td>Surpreso</td>
+            <td>{{face.emotion.surprise | percent:'0.2-2'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </ion-item>
+
+    <ion-item lines="full"></ion-item>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button color="primary" (click)="closeModal()">
+      <ion-icon name="chevron-back-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

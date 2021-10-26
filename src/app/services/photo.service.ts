@@ -1,3 +1,4 @@
+import { ComputerVisionService } from './computer-vision.service';
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/naming-convention */
@@ -9,8 +10,6 @@ import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Storage } from '@capacitor/storage';
 import { Platform } from '@ionic/angular';
 
-
-
 @Injectable({
   providedIn: 'root',
 })
@@ -18,7 +17,7 @@ export class PhotoService {
   public photos: IPhoto[] = [];
   private PHOTO_STORAGE = 'photos';
 
-  constructor(private platform: Platform) { }
+  constructor(private platform: Platform, private csService: ComputerVisionService) { }
 
   public async loadSaved() {
     // Retrieve cached photo array data
@@ -53,7 +52,7 @@ export class PhotoService {
     const capturedPhoto = await Camera.getPhoto({
       resultType: CameraResultType.Uri, // file-based data; provides best performance
       source: CameraSource.Camera, // automatically take a new photo with the camera
-      quality: 100, // highest quality (0 to 100)
+      quality: 50, // highest quality (0 to 100)
     });
 
     const savedImageFile = await this.savePicture(capturedPhoto);
@@ -117,6 +116,22 @@ export class PhotoService {
     }
   }
 
+  private async readFile(photo: IPhoto) {
+    // If running on the web...
+    if (!this.platform.is('hybrid')) {
+      // Display the photo by reading into base64 format
+      const readFile = await Filesystem.readFile({
+        path: photo.filepath,
+        directory: Directory.Data,
+      });
+
+      // Web platform only: Load the photo as base64 data
+      photo.webviewPath = `data:image/jpeg;base64,${readFile.data}`;
+    }
+
+    return photo.webviewPath;
+  }
+
   // Delete picture by removing it from reference data and the filesystem
   public async deletePicture(photo: IPhoto, position: number) {
     // Remove this photo from the Photos reference data array
@@ -130,10 +145,20 @@ export class PhotoService {
 
     // delete photo file from filesystem
     const filename = photo.filepath.substr(photo.filepath.lastIndexOf('/') + 1);
+
     await Filesystem.deleteFile({
       path: filename,
       directory: Directory.Data,
     });
+  }
+
+  async getBlob(photoFile: IPhoto) {
+    // Busca o arquivo no File System
+    const file = await this.readFile(photoFile);
+    // Converte o arquivo para Blob
+    const response = await fetch(file);
+    // Retorna o Blob
+    return await response.blob();
   }
 
   convertBlobToBase64 = (blob: Blob) =>

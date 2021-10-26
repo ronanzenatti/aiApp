@@ -11,6 +11,18 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'analise',
+    loadChildren: () => import('./analise/analise.module').then( m => m.AnalisePageModule)
+  },
+  {
+    path: 'tag',
+    loadChildren: () => import('./tag/tag.module').then( m => m.TagPageModule)
+  },
+  {
+    path: 'face',
+    loadChildren: () => import('./face/face.module').then( m => m.FacePageModule)
+  },
 ];
 
 @NgModule({
